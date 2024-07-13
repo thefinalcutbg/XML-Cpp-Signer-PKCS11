@@ -6,15 +6,11 @@
 
 std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11)
 {
-	auto timestamp = FreeFn::get8601timestamp();
-
 	std::string xadesNode =
 			"<xades:SignedProperties Id=\"xadesNode\">"
 					"<xades:SignedSignatureProperties>"
-						"<xades:SigningTime>" ;
-
-	xadesNode += "2024-07-13T14:58:37Z";
-	xadesNode +=
+						"<xades:SigningTime>" 
+						+ FreeFn::get8601timestamp() +
 						"</xades:SigningTime>"
 						"<xades:SigningCertificateV2>"
 							"<xades:Cert>"
@@ -132,7 +128,6 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11)
 	};
 
 	if (!insertPosition) return "not an xml (no closing tag)";
-
 
 	result.insert(insertPosition, signature);
 

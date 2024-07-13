@@ -14,7 +14,7 @@ namespace FreeFn
 {
     // Canonicalizes XML using Exclusive canonicalization
     std::string canonicalizeXML(const std::string& xmlInput);
-   
+
     std::string base64Encode(const std::string& input);
 
     // Function to calculate the SHA-256 digest

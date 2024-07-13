@@ -13,9 +13,6 @@
 std::string FreeFn::canonicalizeXML(const std::string& xmlInput)
 {
 
-    // Initialize the library and check potential ABI mismatches
-    LIBXML_TEST_VERSION
-
         // Parse the XML from the input string
         xmlDocPtr doc = xmlReadMemory(xmlInput.c_str(), xmlInput.size(), "noname.xml", NULL, XML_PARSE_NOBLANKS | XML_PARSE_NOERROR | XML_PARSE_NOWARNING);
     if (doc == nullptr) {
@@ -154,9 +151,6 @@ std::string FreeFn::getSHA256DigestBase64(x509_st* cert)
         return "Failed to compute SHA256 digest";
     }
 
-    // Free the DER buffer
-    OPENSSL_free(derBuffer);
-
     // Encode the digest in base64
     BIO* bio = BIO_new(BIO_s_mem());
     BIO* b64 = BIO_new(BIO_f_base64());
@@ -172,6 +166,7 @@ std::string FreeFn::getSHA256DigestBase64(x509_st* cert)
     std::string base64Digest(bufferPtr->data, bufferPtr->length);
 
     // Clean up
+    OPENSSL_free(derBuffer);
     BIO_free_all(bio);
 
     return base64Digest;
@@ -258,10 +253,6 @@ void customErrorHandler(void* ctx, const char* msg, ...) {(void)ctx;(void)msg;}
 
 std::string FreeFn::addNamespacesToRoot(const std::string& xmlContentDst, const NSList& namespaces)
 {
-
-    // Initialize the library and check potential ABI mismatches
-    LIBXML_TEST_VERSION
-
     //supress the missing namespace errors
      xmlSetGenericErrorFunc(NULL, customErrorHandler);
 
@@ -302,8 +293,6 @@ std::string FreeFn::addNamespacesToRoot(const std::string& xmlContentDst, const 
 
 std::vector<std::pair<std::string, std::string>> FreeFn::getNamespacesFromRoot(const std::string xml)
 {
-    // Initialize the library and check potential ABI mismatches
-    LIBXML_TEST_VERSION
 
         // Parse the source XML content
         xmlDocPtr docSrc = xmlReadMemory(xml.c_str(), xml.size(), "noname.xml", NULL, 0);
@@ -371,10 +360,8 @@ std::string FreeFn::get8601timestamp()
 {
     time_t now;
     time(&now);
-
-    constexpr size_t size = sizeof "2011-10-08T07:07:09Z";
-    char buf[size];
+    char buf[21];
     strftime(buf, sizeof buf, "%FT%TZ", gmtime(&now));
 
-    return std::string(buf, size);
+    return std::string(buf);
 }
