@@ -9,7 +9,7 @@ A simple C++17 script that creates enveloped XML signature using the PKCS11 inte
 
 ## Setup
 
-Use the provided MSVC solution or setup the project by yourself by providing the necessary includes and libs.
+Use the provided MS Visual Studio solution or setup the project by yourself. Provide the necessary includes and libs.
 
 ## License
 
