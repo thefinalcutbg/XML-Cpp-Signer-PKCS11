@@ -7,7 +7,7 @@
 
 int main()
 {
-    std::string xml = R"xml(<?xml version="1.0"?><example>some data to sign</example)xml";
+    std::string xml = R"xml(<?xml version="1.0"?><example>some data to sign</example>)xml";
 
     PKCS11::setMiddlewareFilePath({ "C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll" });
 
@@ -22,8 +22,8 @@ int main()
 
         std::string password;
 
+       // password = "";
         std::cout << "Enter password: ";
-
         std::cin >> password;
 
         if (!hsm.login(password)) {
