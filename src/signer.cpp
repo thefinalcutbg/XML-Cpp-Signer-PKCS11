@@ -4,9 +4,12 @@
 #include "pkcs11.h"
 
 
-std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11)
+std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, bool XAdES)
 {
-	std::string xadesNode =
+	std::string xadesNode;
+	
+	if(XAdES){
+		xadesNode =
 			"<xades:SignedProperties Id=\"xadesNode\">"
 					"<xades:SignedSignatureProperties>"
 						"<xades:SigningTime>" 
@@ -46,6 +49,7 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11)
 						"</xades:DataObjectFormat>"
 					"</xades:SignedDataObjectProperties>"
 				"</xades:SignedProperties>";
+	}
 
 	const std::string signatureNs = "http://www.w3.org/2000/09/xmldsig#";
 
@@ -69,6 +73,13 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11)
                 +
           "</DigestValue>"
 		    "</Reference>"
+		;
+
+	//insert the XAdES ref
+	if(XAdES){
+
+		signedInfo +=
+
 		"<Reference Type=\"http://uri.etsi.org/01903#SignedProperties\" URI=\"#xadesNode\">"
 			    "<Transforms>"
 				    "<Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/>"
@@ -84,10 +95,13 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11)
 							)
 						)
 					)
-                +
+				+
 			"</DigestValue>"
 		"</Reference>"
-	"</SignedInfo>";
+		;
+	}
+
+	signedInfo += "</SignedInfo>";
 
 	
 	std::string signature = 
@@ -106,15 +120,22 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11)
 			"</SignatureValue>" +
 			"<KeyInfo><X509Data><X509Certificate>" +
 				pkcs11.x509_base64() +
-			"</X509Certificate></X509Data></KeyInfo>" +
-			
+			"</X509Certificate></X509Data></KeyInfo>"
+		;
+	
+	if(XAdES){		
+		//insert XAdES object
+		signature += 
+
 			"<Object>"
 		"<xades:QualifyingProperties xmlns:xades=\"http://uri.etsi.org/01903/v1.3.2#\">" +
 					xadesNode +
 				"</xades:QualifyingProperties>"
 			"</Object>"
-		"</Signature>"
-	;
+		;
+	}
+	
+	signature += "</Signature>";
 
 	auto result = xml;
 

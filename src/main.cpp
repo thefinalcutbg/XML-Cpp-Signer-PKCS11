@@ -31,7 +31,7 @@ int main()
         }
     }
 
-    std::cout << std::endl << Signer::signEnveloped(xml, hsm);
+    std::cout << std::endl << Signer::signEnveloped(xml, hsm, true);
 
     return 0;
 }
