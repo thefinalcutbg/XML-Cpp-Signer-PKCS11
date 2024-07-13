@@ -1,6 +1,8 @@
 # XML Cpp Signer PKCS11
 
 A simple C++17 script that creates enveloped XML signature using the PKCS11 interface. It supports XAdES BASELINE_B specification.
+Verify XAdES at [https://verifysignature.eu](https://verifysignature.eu/verification/#dropzone)
+Verify XML DSig at [Chilkat XML Verifier](https://tools.chilkat.io/xmlDsigVerify.cshtml)
 
 ## Dependencies
 - [OpenSsl](https://github.com/openssl/openssl)
