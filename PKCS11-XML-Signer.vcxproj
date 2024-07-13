@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{06d6252e-6518-4edf-9823-1ea83d947de1}</ProjectGuid>
+    <RootNamespace>PKCS11XMLSigner</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>XML Cpp Signer PKCS11</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include\openssl;$(SolutionDir)\include\libp11;$(SolutionDir)\include\libxml2;$(SolutionDir)\include;GeneratedFiles\$(ConfigurationName);GeneratedFiles;$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir)/src/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Dev\PKCS11-XML-Signer\PKCS11-XML-Signer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcrypto.lib;libssl.lib;libxml2.lib;libp11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include\openssl;$(SolutionDir)\include\libp11;$(SolutionDir)\include\libxml2;$(SolutionDir)\include;GeneratedFiles\$(ConfigurationName);GeneratedFiles;$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir)/src/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Dev\PKCS11-XML-Signer\PKCS11-XML-Signer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcrypto.lib;libssl.lib;libxml2.lib;libp11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include\openssl;$(SolutionDir)\include\libp11;$(SolutionDir)\include\libxml2;$(SolutionDir)\include;GeneratedFiles\$(ConfigurationName);GeneratedFiles;$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir)/src/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Dev\PKCS11-XML-Signer\PKCS11-XML-Signer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcrypto.lib;libssl.lib;libxml2.lib;libp11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include\openssl;$(SolutionDir)\include\libp11;$(SolutionDir)\include\libxml2;$(SolutionDir)\include;GeneratedFiles\$(ConfigurationName);GeneratedFiles;$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir)/src/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Dev\PKCS11-XML-Signer\PKCS11-XML-Signer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcrypto.lib;libssl.lib;libxml2.lib;libp11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="include\OpenSSL\applink.c" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\pkcs11.cpp" />
+    <ClCompile Include="src\freefn.cpp" />
+    <ClCompile Include="src\signer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\libp11\engine.h" />
+    <ClInclude Include="include\libp11\eng_err.h" />
+    <ClInclude Include="include\libp11\libp11-int.h" />
+    <ClInclude Include="include\libp11\libp11.h" />
+    <ClInclude Include="include\libp11\p11_err.h" />
+    <ClInclude Include="include\libp11\p11_pthread.h" />
+    <ClInclude Include="include\libp11\pkcs11.h" />
+    <ClInclude Include="include\libxml2\libxml\c14n.h" />
+    <ClInclude Include="include\libxml2\libxml\catalog.h" />
+    <ClInclude Include="include\libxml2\libxml\chvalid.h" />
+    <ClInclude Include="include\libxml2\libxml\debugXML.h" />
+    <ClInclude Include="include\libxml2\libxml\dict.h" />
+    <ClInclude Include="include\libxml2\libxml\DOCBparser.h" />
+    <ClInclude Include="include\libxml2\libxml\encoding.h" />
+    <ClInclude Include="include\libxml2\libxml\entities.h" />
+    <ClInclude Include="include\libxml2\libxml\globals.h" />
+    <ClInclude Include="include\libxml2\libxml\hash.h" />
+    <ClInclude Include="include\libxml2\libxml\HTMLparser.h" />
+    <ClInclude Include="include\libxml2\libxml\HTMLtree.h" />
+    <ClInclude Include="include\libxml2\libxml\list.h" />
+    <ClInclude Include="include\libxml2\libxml\nanoftp.h" />
+    <ClInclude Include="include\libxml2\libxml\nanohttp.h" />
+    <ClInclude Include="include\libxml2\libxml\parser.h" />
+    <ClInclude Include="include\libxml2\libxml\parserInternals.h" />
+    <ClInclude Include="include\libxml2\libxml\pattern.h" />
+    <ClInclude Include="include\libxml2\libxml\relaxng.h" />
+    <ClInclude Include="include\libxml2\libxml\SAX.h" />
+    <ClInclude Include="include\libxml2\libxml\SAX2.h" />
+    <ClInclude Include="include\libxml2\libxml\schemasInternals.h" />
+    <ClInclude Include="include\libxml2\libxml\schematron.h" />
+    <ClInclude Include="include\libxml2\libxml\threads.h" />
+    <ClInclude Include="include\libxml2\libxml\tree.h" />
+    <ClInclude Include="include\libxml2\libxml\uri.h" />
+    <ClInclude Include="include\libxml2\libxml\valid.h" />
+    <ClInclude Include="include\libxml2\libxml\xinclude.h" />
+    <ClInclude Include="include\libxml2\libxml\xlink.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlautomata.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlerror.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlexports.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlIO.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlmemory.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlmodule.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlreader.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlregexp.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlsave.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlschemas.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlschemastypes.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlstring.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlunicode.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlversion.h" />
+    <ClInclude Include="include\libxml2\libxml\xmlwriter.h" />
+    <ClInclude Include="include\libxml2\libxml\xpath.h" />
+    <ClInclude Include="include\libxml2\libxml\xpathInternals.h" />
+    <ClInclude Include="include\libxml2\libxml\xpointer.h" />
+    <ClInclude Include="include\OpenSSL\aes.h" />
+    <ClInclude Include="include\OpenSSL\asn1.h" />
+    <ClInclude Include="include\OpenSSL\asn1err.h" />
+    <ClInclude Include="include\OpenSSL\asn1t.h" />
+    <ClInclude Include="include\OpenSSL\asn1_mac.h" />
+    <ClInclude Include="include\OpenSSL\async.h" />
+    <ClInclude Include="include\OpenSSL\asyncerr.h" />
+    <ClInclude Include="include\OpenSSL\bio.h" />
+    <ClInclude Include="include\OpenSSL\bioerr.h" />
+    <ClInclude Include="include\OpenSSL\blowfish.h" />
+    <ClInclude Include="include\OpenSSL\bn.h" />
+    <ClInclude Include="include\OpenSSL\bnerr.h" />
+    <ClInclude Include="include\OpenSSL\buffer.h" />
+    <ClInclude Include="include\OpenSSL\buffererr.h" />
+    <ClInclude Include="include\OpenSSL\camellia.h" />
+    <ClInclude Include="include\OpenSSL\cast.h" />
+    <ClInclude Include="include\OpenSSL\cmac.h" />
+    <ClInclude Include="include\OpenSSL\cms.h" />
+    <ClInclude Include="include\OpenSSL\cmserr.h" />
+    <ClInclude Include="include\OpenSSL\comp.h" />
+    <ClInclude Include="include\OpenSSL\comperr.h" />
+    <ClInclude Include="include\OpenSSL\conf.h" />
+    <ClInclude Include="include\OpenSSL\conferr.h" />
+    <ClInclude Include="include\OpenSSL\conf_api.h" />
+    <ClInclude Include="include\OpenSSL\crypto.h" />
+    <ClInclude Include="include\OpenSSL\cryptoerr.h" />
+    <ClInclude Include="include\OpenSSL\ct.h" />
+    <ClInclude Include="include\OpenSSL\cterr.h" />
+    <ClInclude Include="include\OpenSSL\des.h" />
+    <ClInclude Include="include\OpenSSL\dh.h" />
+    <ClInclude Include="include\OpenSSL\dherr.h" />
+    <ClInclude Include="include\OpenSSL\dsa.h" />
+    <ClInclude Include="include\OpenSSL\dsaerr.h" />
+    <ClInclude Include="include\OpenSSL\dtls1.h" />
+    <ClInclude Include="include\OpenSSL\ebcdic.h" />
+    <ClInclude Include="include\OpenSSL\ec.h" />
+    <ClInclude Include="include\OpenSSL\ecdh.h" />
+    <ClInclude Include="include\OpenSSL\ecdsa.h" />
+    <ClInclude Include="include\OpenSSL\ecerr.h" />
+    <ClInclude Include="include\OpenSSL\engine.h" />
+    <ClInclude Include="include\OpenSSL\engineerr.h" />
+    <ClInclude Include="include\OpenSSL\err.h" />
+    <ClInclude Include="include\OpenSSL\evp.h" />
+    <ClInclude Include="include\OpenSSL\evperr.h" />
+    <ClInclude Include="include\OpenSSL\e_os2.h" />
+    <ClInclude Include="include\OpenSSL\hmac.h" />
+    <ClInclude Include="include\OpenSSL\idea.h" />
+    <ClInclude Include="include\OpenSSL\kdf.h" />
+    <ClInclude Include="include\OpenSSL\kdferr.h" />
+    <ClInclude Include="include\OpenSSL\lhash.h" />
+    <ClInclude Include="include\OpenSSL\md2.h" />
+    <ClInclude Include="include\OpenSSL\md4.h" />
+    <ClInclude Include="include\OpenSSL\md5.h" />
+    <ClInclude Include="include\OpenSSL\mdc2.h" />
+    <ClInclude Include="include\OpenSSL\modes.h" />
+    <ClInclude Include="include\OpenSSL\objects.h" />
+    <ClInclude Include="include\OpenSSL\objectserr.h" />
+    <ClInclude Include="include\OpenSSL\obj_mac.h" />
+    <ClInclude Include="include\OpenSSL\ocsp.h" />
+    <ClInclude Include="include\OpenSSL\ocsperr.h" />
+    <ClInclude Include="include\OpenSSL\opensslconf.h" />
+    <ClInclude Include="include\OpenSSL\opensslv.h" />
+    <ClInclude Include="include\OpenSSL\ossl_typ.h" />
+    <ClInclude Include="include\OpenSSL\pem.h" />
+    <ClInclude Include="include\OpenSSL\pem2.h" />
+    <ClInclude Include="include\OpenSSL\pemerr.h" />
+    <ClInclude Include="include\OpenSSL\pkcs12.h" />
+    <ClInclude Include="include\OpenSSL\pkcs12err.h" />
+    <ClInclude Include="include\OpenSSL\pkcs7.h" />
+    <ClInclude Include="include\OpenSSL\pkcs7err.h" />
+    <ClInclude Include="include\OpenSSL\rand.h" />
+    <ClInclude Include="include\OpenSSL\randerr.h" />
+    <ClInclude Include="include\OpenSSL\rand_drbg.h" />
+    <ClInclude Include="include\OpenSSL\rc2.h" />
+    <ClInclude Include="include\OpenSSL\rc4.h" />
+    <ClInclude Include="include\OpenSSL\rc5.h" />
+    <ClInclude Include="include\OpenSSL\ripemd.h" />
+    <ClInclude Include="include\OpenSSL\rsa.h" />
+    <ClInclude Include="include\OpenSSL\rsaerr.h" />
+    <ClInclude Include="include\OpenSSL\safestack.h" />
+    <ClInclude Include="include\OpenSSL\seed.h" />
+    <ClInclude Include="include\OpenSSL\sha.h" />
+    <ClInclude Include="include\OpenSSL\srp.h" />
+    <ClInclude Include="include\OpenSSL\srtp.h" />
+    <ClInclude Include="include\OpenSSL\ssl.h" />
+    <ClInclude Include="include\OpenSSL\ssl2.h" />
+    <ClInclude Include="include\OpenSSL\ssl3.h" />
+    <ClInclude Include="include\OpenSSL\sslerr.h" />
+    <ClInclude Include="include\OpenSSL\stack.h" />
+    <ClInclude Include="include\OpenSSL\store.h" />
+    <ClInclude Include="include\OpenSSL\storeerr.h" />
+    <ClInclude Include="include\OpenSSL\symhacks.h" />
+    <ClInclude Include="include\OpenSSL\tls1.h" />
+    <ClInclude Include="include\OpenSSL\ts.h" />
+    <ClInclude Include="include\OpenSSL\tserr.h" />
+    <ClInclude Include="include\OpenSSL\txt_db.h" />
+    <ClInclude Include="include\OpenSSL\ui.h" />
+    <ClInclude Include="include\OpenSSL\uierr.h" />
+    <ClInclude Include="include\OpenSSL\whrlpool.h" />
+    <ClInclude Include="include\OpenSSL\x509.h" />
+    <ClInclude Include="include\OpenSSL\x509err.h" />
+    <ClInclude Include="include\OpenSSL\x509v3.h" />
+    <ClInclude Include="include\OpenSSL\x509v3err.h" />
+    <ClInclude Include="include\OpenSSL\x509_vfy.h" />
+    <ClInclude Include="include\OpenSSL\__DECC_INCLUDE_EPILOGUE.H" />
+    <ClInclude Include="include\OpenSSL\__DECC_INCLUDE_PROLOGUE.H" />
+    <ClInclude Include="src\pkcs11.h" />
+    <ClInclude Include="src\freefn.h" />
+    <ClInclude Include="src\signer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\libxml2\libxml\Makefile.am" />
+    <None Include="include\libxml2\libxml\xmlversion.h.in" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
