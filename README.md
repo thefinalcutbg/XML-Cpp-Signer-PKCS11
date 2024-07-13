@@ -38,8 +38,7 @@ int main()
       if (hsm.loginRequired()) {
      
           std::string password;
-     
-         // password = "";
+
           std::cout << "Enter password: ";
           std::cin >> password;
      
