@@ -1,4 +1,4 @@
- XML Cpp Signer PKCS11
+XML Cpp Signer PKCS11
 
 A simple C++17 script that creates enveloped XML signature using the PKCS11 interface. It supports XAdES BASELINE_B specification.
 
@@ -17,40 +17,40 @@ This software is licensed under the MIT license, or public domain if desired and
 
 ### Example
 
-  #include <string>
-  #include <iostream>
-  #include "signer.h"
-  #include "pkcs11.h"
+   #include <string>
+   #include <iostream>
+   #include "signer.h"
+   #include "pkcs11.h"
   
-  int main()
-  {
-      std::string xml = R"xml(<?xml version="1.0"?><example>some data to sign</example>)xml";
-  
-      PKCS11::setMiddlewareFilePath({ "C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll" });
-  
-      PKCS11 hsm;
-  
-      if (!hsm.hsmLoaded()) {
-          std::cout << "no hsm found";
-          return 0;
-      }
-  
-      if (hsm.loginRequired()) {
-  
-          std::string password;
-  
-         // password = "";
-          std::cout << "Enter password: ";
-          std::cin >> password;
-  
-          if (!hsm.login(password)) {
-              std::cout << std::endl << "Wrong password!" << std::endl;
-          }
-      }
-
-      bool signWithXAdES = true;
-      std::cout << std::endl << Signer::signEnveloped(xml, hsm, signWithXAdES);
-  
-      return 0;
-  }
+   int main()
+   {
+       std::string xml = R"xml(<?xml version="1.0"?><example>some data to sign</example>)xml";
+   
+       PKCS11::setMiddlewareFilePath({ "C:/Program Files/OpenSC Project/OpenSC/pkcs11/opensc-pkcs11.dll" });
+   
+       PKCS11 hsm;
+   
+       if (!hsm.hsmLoaded()) {
+           std::cout << "no hsm found";
+           return 0;
+       }
+   
+       if (hsm.loginRequired()) {
+   
+           std::string password;
+   
+          // password = "";
+           std::cout << "Enter password: ";
+           std::cin >> password;
+   
+           if (!hsm.login(password)) {
+               std::cout << std::endl << "Wrong password!" << std::endl;
+           }
+       }
+ 
+       bool signWithXAdES = true;
+       std::cout << std::endl << Signer::signEnveloped(xml, hsm, signWithXAdES);
+   
+       return 0;
+    }
 
