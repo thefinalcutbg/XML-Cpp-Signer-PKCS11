@@ -1,14 +1,14 @@
 #pragma once
 #include "freefn.h"
 
+#include <ctime>
+
 #include <libxml/parser.h>
 #include <libxml/c14n.h>
 
 #include <openssl/bio.h>
 #include <openssl/evp.h>
 #include <openssl/x509.h>
-
-#include <vector>
 
 std::string FreeFn::canonicalizeXML(const std::string& xmlInput)
 {
@@ -254,12 +254,16 @@ std::vector<std::pair<std::string, std::string>> getNamespacesFromRoot(xmlNodePt
     return namespaces;
 }
 
+void customErrorHandler(void* ctx, const char* msg, ...) {(void)ctx;(void)msg;}
 
 std::string FreeFn::addNamespacesToRoot(const std::string& xmlContentDst, const NSList& namespaces)
 {
 
     // Initialize the library and check potential ABI mismatches
     LIBXML_TEST_VERSION
+
+    //supress the missing namespace errors
+     xmlSetGenericErrorFunc(NULL, customErrorHandler);
 
     // Parse the destination XML content
     xmlDocPtr docDst = xmlReadMemory(xmlContentDst.c_str(), xmlContentDst.size(), "noname.xml", NULL, 0);
@@ -323,4 +327,54 @@ std::vector<std::pair<std::string, std::string>> FreeFn::getNamespacesFromRoot(c
     }
 
     return namespaces;
+}
+
+std::string FreeFn::get_country_from_x509(x509_st* cert)
+{
+    if (cert == NULL) {
+        return "";
+    }
+
+    X509_NAME* subject_name = X509_get_subject_name(cert);
+    if (subject_name == NULL) {
+        return "";
+    }
+
+    int country_index = X509_NAME_get_index_by_NID(subject_name, NID_countryName, -1);
+    if (country_index < 0) {
+        return "";
+    }
+
+    X509_NAME_ENTRY* country_entry = X509_NAME_get_entry(subject_name, country_index);
+    if (country_entry == NULL) {
+        return "";
+    }
+
+    ASN1_STRING* country_asn1 = X509_NAME_ENTRY_get_data(country_entry);
+    if (country_asn1 == NULL) {
+        return "";
+    }
+
+    unsigned char* country_str = NULL;
+    int length = ASN1_STRING_to_UTF8(&country_str, country_asn1);
+    if (length < 0) {
+        return "";
+    }
+
+    std::string country((char*)country_str, length);
+    OPENSSL_free(country_str);
+
+    return country;
+}
+
+std::string FreeFn::get8601timestamp()
+{
+    time_t now;
+    time(&now);
+
+    constexpr size_t size = sizeof "2011-10-08T07:07:09Z";
+    char buf[size];
+    strftime(buf, sizeof buf, "%FT%TZ", gmtime(&now));
+
+    return std::string(buf, size);
 }
