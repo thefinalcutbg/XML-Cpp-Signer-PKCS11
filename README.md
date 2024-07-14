@@ -50,7 +50,7 @@ int main()
       }
      
       bool signWithXAdES = true;
-      std::cout << std::endl << Signer::signEnveloped(xml, hsm, signWithXAdES);
+      std::cout << std::endl << Signer::signEnveloped(xml, hsm.takePrivateKey(), hsm.x509raw(), signWithXAdES);
      
       return 0;
 }
