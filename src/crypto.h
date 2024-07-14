@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
 struct x509_st;
 struct evp_pkey_st;
@@ -23,15 +24,14 @@ namespace Crypto
     // Function to calculate the SHA-256 digest
     std::string calculateSHA256Digest(const std::string& canonicalizedXML);
 
-
     //digests, calculates signature and returns it as base64
     std::string calculateSignature(const std::string& canonicalizedXml, evp_pkey_st* prv_handle);
 
     //digest of the X509 (required by XAdES)
     std::string getSHA256DigestBase64(x509_st* cert);
     
-    // Converts x509 certificate to base64
-    std::string IssuerSerialBase64(x509_st* cert);
+    //get issuer name and serial
+    std::pair<std::string, std::string> getIssuerNameAndSerial(x509_st* cert);
    
     //checks if x509 is valid according to current datetime
     bool isValidX509(x509_st* cert);

@@ -191,38 +191,28 @@ std::string Crypto::getSHA256DigestBase64(x509_st* cert)
     return base64Digest;
 }
 
-std::string Crypto::IssuerSerialBase64(x509_st* cert)
+std::pair<std::string, std::string> Crypto::getIssuerNameAndSerial(x509_st* cert)
 {
-    if (cert == nullptr) {
-        return "Invalid X509 certificate provided";
-    }
+    // Buffer for the issuer name
+    char issuerName[256];
 
-    // Get the serial number from the certificate
-    ASN1_INTEGER* serialNumber = X509_get_serialNumber(cert);
-    if (serialNumber == nullptr) {
-        return "Failed to get serial number from certificate";
-    }
+    // Extract issuer name
+    X509_NAME_oneline(X509_get_issuer_name(cert), issuerName, sizeof(issuerName));
 
-    // Convert serial number to a string
-    BIGNUM* bn = ASN1_INTEGER_to_BN(serialNumber, nullptr);
-    if (bn == nullptr) {
-        return "Failed to convert serial number to BIGNUM";
-    }
-    char* serialNumberHex = BN_bn2hex(bn);
-    if (serialNumberHex == nullptr) {
-        BN_free(bn);
-        return "Failed to convert serial number to hex string";
-    }
-    std::string serialNumberStr(serialNumberHex);
-    OPENSSL_free(serialNumberHex);
+    // Extract issuer serial number
+    ASN1_INTEGER* serial = X509_get_serialNumber(cert);
+    BIGNUM* bn = ASN1_INTEGER_to_BN(serial, nullptr);
+    char* serialNumber = BN_bn2hex(bn);
+
+    // Store results in a std::pair
+    std::pair<std::string, std::string> result(issuerName, serialNumber);
+
+    // Free allocated resources
     BN_free(bn);
+    OPENSSL_free(serialNumber);
 
-    // Convert the serial number string to Base64
-    std::string serialNumberBase64 = base64Encode(serialNumberStr);
-
-    return serialNumberBase64;
+    return result;
 }
-
 
 bool Crypto::isValidX509(x509_st* cert)
 {

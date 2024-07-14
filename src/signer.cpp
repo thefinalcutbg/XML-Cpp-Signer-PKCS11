@@ -8,6 +8,9 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 	std::string xadesNode;
 
 	if (XAdES) {
+
+		auto [issuerName, issuerSerial] = Crypto::getIssuerNameAndSerial(cert);
+
 		xadesNode =
 			"<xades:SignedProperties Id=\"xadesNode\">"
 			"<xades:SignedSignatureProperties>"
