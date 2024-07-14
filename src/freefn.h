@@ -15,7 +15,11 @@ namespace FreeFn
     // Canonicalizes XML using Exclusive canonicalization
     std::string canonicalizeXML(const std::string& xmlInput);
 
+    //encode string to Base64
     std::string base64Encode(const std::string& input);
+
+    //encode X509 to Base64
+    std::string base64Encode(x509_st* cert);
 
     // Function to calculate the SHA-256 digest
     std::string calculateSHA256Digest(const std::string& canonicalizedXML);
@@ -25,7 +29,7 @@ namespace FreeFn
 
     //digest of the X509 (required by XAdES)
     std::string getSHA256DigestBase64(x509_st* cert);
-    
+
     // Converts x509 certificate to base64
     std::string IssuerSerialBase64(x509_st* cert);
    

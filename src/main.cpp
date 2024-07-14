@@ -33,14 +33,19 @@ int main()
     //Enveloped signature XAdES example:
     std::string xml = R"xml(<?xml version="1.0"?><example>some data to sign</example>)xml";
 
-    std::cout << Signer::signEnveloped(xml, hsm, true) << "\n\n\n\n";
+    std::cout << Signer::signEnveloped(xml, hsm.takePrivateKey(), hsm.x509raw(), true) << "\n\n\n\n";
     
     //Signing part of xml (e.g. a body of a SOAP message)
     std::string body = R"(<e:Body Id="signedContent">some contents</e:Body>)";
 
     std::string soap =
         R"(<?xml version="1.0" encoding="utf-8"?><e:Envelope xmlns:e="http://schemas.xmlsoap.org/soap/envelope/"><e:Header>)"
-        + Signer::getSignature(FreeFn::addNamespacesToRoot(body, { {"e", "http://schemas.xmlsoap.org/soap/envelope/" } }), hsm, "#signedContent", false)
+        + Signer::getSignature(
+            FreeFn::addNamespacesToRoot(body, { {"e", "http://schemas.xmlsoap.org/soap/envelope/" } }), 
+            hsm.takePrivateKey(), 
+            hsm.x509raw(), 
+            "#signedContent", 
+            false)
         + "</e:Header>"
         + body +
         "</e:Envelope>"
