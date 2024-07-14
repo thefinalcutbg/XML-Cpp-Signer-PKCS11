@@ -4,7 +4,12 @@
 #include "pkcs11.h"
 
 
-std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, bool XAdES)
+std::string Signer::getSignature(
+	const std::string& xml, 
+	const PKCS11& pkcs11, 
+	const std::string& refUri,
+	bool XAdES
+)
 {
 	std::string xadesNode;
 	
@@ -55,11 +60,12 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, 
 
 	std::string signedInfo =
     "<SignedInfo>"
-		"<CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/>"
+		"<CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n\"/>"
 		"<SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256\"/>"
-		"<Reference Id=\"r-id-1\" URI=\"\">"
+		"<Reference Id=\"r-id-1\" URI=\"" + refUri + "\">"
 			"<Transforms>"
 				"<Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>"
+				"<Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/>"
 			"</Transforms>"
 			"<DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmlenc#sha256\"/>"
 			"<DigestValue>"
@@ -136,6 +142,13 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, 
 	}
 	
 	signature += "</Signature>";
+
+	return signature;
+}
+
+std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, bool XAdES)
+{
+	auto signature = Signer::getSignature(xml, pkcs11, "", XAdES);
 
 	auto result = xml;
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "signer.h"
 #include "pkcs11.h"
+#include "freefn.h"
 
 //Simple example. If you want to use the code in your software, don't include this file 
 
@@ -31,7 +32,6 @@ int main()
         }
     }
 
-    std::cout << std::endl << Signer::signEnveloped(xml, hsm, true);
-
+    std::cout << Signer::signEnveloped(xml, hsm, true);
     return 0;
 }
