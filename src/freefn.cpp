@@ -65,26 +65,6 @@ std::string FreeFn::base64Encode(const std::string& input) {
     return base64Encoded;
 }
 
-std::string FreeFn::base64Encode(x509_st* cert)
-{
-    int length = i2d_X509(cert, 0);
-
-    std::vector<char> vec;
-    vec.resize(length);
-    char* data = vec.data();
-
-    char** dataP = &data;
-    unsigned char** dataPu = (unsigned char**)dataP;
-
-
-    if (i2d_X509(cert, dataPu) < 0)
-    {
-        return std::string();
-    }
-
-    return FreeFn::base64Encode(std::string(vec.data(), vec.size()));
-}
-
 
 std::string FreeFn::calculateSHA256Digest(const std::string& canonicalizedXML) {
 

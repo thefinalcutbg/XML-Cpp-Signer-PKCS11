@@ -2,8 +2,8 @@
 #include <vector>
 
 struct evp_pkey_st;
-struct x509_st;
 struct PKCS11_cert_st;
+struct x509_st;
 
 //A simple c++ wrapper around libp11
 

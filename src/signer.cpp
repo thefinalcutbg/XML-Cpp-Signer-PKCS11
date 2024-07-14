@@ -1,15 +1,10 @@
-﻿#include "signer.h"
+﻿#include "Signer.h"
 
 #include "freefn.h"
+#include "pkcs11.h"
 
 
-std::string Signer::getSignature(
-	const std::string& xml, 
-	evp_pkey_st* prvKey, 
-	x509_st* cert,
-	const std::string& refUri,
-	bool XAdES
-)
+std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, bool XAdES)
 {
 	std::string xadesNode;
 	
@@ -26,7 +21,7 @@ std::string Signer::getSignature(
 									"<DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmlenc#sha256\"/>"
 									"<DigestValue>"
 										+
-											FreeFn::getSHA256DigestBase64(cert)
+											FreeFn::getSHA256DigestBase64(pkcs11.x509raw())
 										+
 								"</DigestValue>"
 								"</xades:CertDigest>"
@@ -38,7 +33,7 @@ std::string Signer::getSignature(
 							"<xades:PostalCode/>"
 							"<xades:CountryName>"
 								+
-									FreeFn::get_country_from_x509(cert)
+									FreeFn::get_country_from_x509(pkcs11.x509raw())
 								+ 
 							"</xades:CountryName>"
 						"</xades:SignatureProductionPlaceV2>"
@@ -60,9 +55,9 @@ std::string Signer::getSignature(
 
 	std::string signedInfo =
     "<SignedInfo>"
-		"<CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n\"/>"
+		"<CanonicalizationMethod Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/>"
 		"<SignatureMethod Algorithm=\"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256\"/>"
-		"<Reference Id=\"r-id-1\" URI=\"" + refUri + "\">"
+		"<Reference Id=\"r-id-1\" URI=\"\">"
 			"<Transforms>"
 				"<Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>"
 				"<Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/>"
@@ -120,12 +115,12 @@ std::string Signer::getSignature(
 							FreeFn::addNamespacesToRoot( //since we use exclusive C14, only the signatureNs is required
 								signedInfo, NSList{ { "", signatureNs} }
 							)
-					) ,prvKey
+					) ,pkcs11.takePrivateKey()
 				)
 			 +
 			"</SignatureValue>" +
 			"<KeyInfo><X509Data><X509Certificate>" +
-				FreeFn::base64Encode(cert) +
+				pkcs11.x509_base64() +
 			"</X509Certificate></X509Data></KeyInfo>"
 		;
 	
@@ -142,13 +137,6 @@ std::string Signer::getSignature(
 	}
 	
 	signature += "</Signature>";
-
-	return signature;
-}
-
-std::string Signer::signEnveloped(const std::string& xml, evp_pkey_st* prvKey, x509_st* cert, bool XAdES)
-{
-	auto signature = Signer::getSignature(xml, prvKey, cert, "", XAdES);
 
 	auto result = xml;
 
