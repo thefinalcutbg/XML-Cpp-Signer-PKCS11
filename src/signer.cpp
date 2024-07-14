@@ -60,6 +60,7 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, 
 		"<Reference Id=\"r-id-1\" URI=\"\">"
 			"<Transforms>"
 				"<Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\"/>"
+				"<Transform Algorithm=\"http://www.w3.org/2001/10/xml-exc-c14n#\"/>"
 			"</Transforms>"
 			"<DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmlenc#sha256\"/>"
 			"<DigestValue>"
