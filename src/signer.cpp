@@ -108,7 +108,7 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 
 
 	std::string signature =
-		"<Signature xmlns=\"" + signatureNs + "\">" +
+		"<Signature xmlns=\"" + signatureNs + "\" Id=\"signatureNode\">" +
 		signedInfo +
 		"<SignatureValue>"
 		+
@@ -131,7 +131,7 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 		signature +=
 
 			"<Object>"
-			"<xades:QualifyingProperties xmlns:xades=\"http://uri.etsi.org/01903/v1.3.2#\">" +
+			"<xades:QualifyingProperties xmlns:xades=\"http://uri.etsi.org/01903/v1.3.2#\" Target=\"#signatureNode\">" +
 			xadesNode +
 			"</xades:QualifyingProperties>"
 			"</Object>"
