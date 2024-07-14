@@ -4,7 +4,7 @@
 #include "pkcs11.h"
 
 
-std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, bool XAdES)
+std::string Signer::signEnveloped(const std::string& xml, evp_pkey_st* pkey, x509_st* cert, bool XAdES)
 {
 	std::string xadesNode;
 	
@@ -21,7 +21,7 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, 
 									"<DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmlenc#sha256\"/>"
 									"<DigestValue>"
 										+
-											FreeFn::getSHA256DigestBase64(pkcs11.x509raw())
+											FreeFn::getSHA256DigestBase64(cert)
 										+
 								"</DigestValue>"
 								"</xades:CertDigest>"
@@ -33,7 +33,7 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, 
 							"<xades:PostalCode/>"
 							"<xades:CountryName>"
 								+
-									FreeFn::get_country_from_x509(pkcs11.x509raw())
+									FreeFn::get_country_from_x509(cert)
 								+ 
 							"</xades:CountryName>"
 						"</xades:SignatureProductionPlaceV2>"
@@ -115,12 +115,12 @@ std::string Signer::signEnveloped(const std::string& xml, const PKCS11& pkcs11, 
 							FreeFn::addNamespacesToRoot( //since we use exclusive C14, only the signatureNs is required
 								signedInfo, NSList{ { "", signatureNs} }
 							)
-					) ,pkcs11.takePrivateKey()
+					), pkey
 				)
 			 +
 			"</SignatureValue>" +
 			"<KeyInfo><X509Data><X509Certificate>" +
-				pkcs11.x509_base64() +
+				FreeFn::base64Encode(cert) +
 			"</X509Certificate></X509Data></KeyInfo>"
 		;
 	

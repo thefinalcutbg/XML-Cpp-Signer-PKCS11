@@ -17,8 +17,12 @@ namespace FreeFn
 
     std::string base64Encode(const std::string& input);
 
+    //Encode X509 to Base54
+    std::string base64Encode(x509_st* cert);
+
     // Function to calculate the SHA-256 digest
     std::string calculateSHA256Digest(const std::string& canonicalizedXML);
+
 
     //digests, calculates signature and returns it as base64
     std::string calculateSignature(const std::string& canonicalizedXml, evp_pkey_st* prv_handle);
