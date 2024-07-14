@@ -10,7 +10,7 @@ typedef std::vector<std::pair<std::string, std::string>> NSList;
 
 //Some free functions using libxml2 for canonicalization and openssl for encryption
 
-namespace FreeFn 
+namespace Crypto 
 {
     // Canonicalizes XML using Exclusive canonicalization
     std::string canonicalizeXML(const std::string& xmlInput);

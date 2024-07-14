@@ -1,5 +1,5 @@
 #pragma once
-#include "freefn.h"
+#include "crypto.h"
 
 #include <ctime>
 
@@ -10,7 +10,7 @@
 #include <openssl/evp.h>
 #include <openssl/x509.h>
 
-std::string FreeFn::canonicalizeXML(const std::string& xmlInput)
+std::string Crypto::canonicalizeXML(const std::string& xmlInput)
 {
 
         // Parse the XML from the input string
@@ -44,7 +44,7 @@ std::string FreeFn::canonicalizeXML(const std::string& xmlInput)
     return canonicalizedXML;
 }
 
-std::string FreeFn::base64Encode(const std::string& input) {
+std::string Crypto::base64Encode(const std::string& input) {
 
     BIO* bio = BIO_new(BIO_s_mem());
     BIO* b64 = BIO_new(BIO_f_base64());
@@ -65,7 +65,7 @@ std::string FreeFn::base64Encode(const std::string& input) {
     return base64Encoded;
 }
 
-std::string FreeFn::base64Encode(x509_st* cert)
+std::string Crypto::base64Encode(x509_st* cert)
 {
     int length = i2d_X509(cert, 0);
 
@@ -81,11 +81,11 @@ std::string FreeFn::base64Encode(x509_st* cert)
         return std::string();
     }
 
-    return FreeFn::base64Encode(std::string(vec.data(), vec.size()));
+    return Crypto::base64Encode(std::string(vec.data(), vec.size()));
 }
 
 
-std::string FreeFn::calculateSHA256Digest(const std::string& canonicalizedXML) {
+std::string Crypto::calculateSHA256Digest(const std::string& canonicalizedXML) {
 
     // Buffer to hold the hash value
     unsigned char hash[SHA256_DIGEST_LENGTH];
@@ -101,7 +101,7 @@ std::string FreeFn::calculateSHA256Digest(const std::string& canonicalizedXML) {
     return digest;
 }
 
-std::string FreeFn::calculateSignature(const std::string& signedInfo, evp_pkey_st* pkey)
+std::string Crypto::calculateSignature(const std::string& signedInfo, evp_pkey_st* pkey)
 {
      if (!pkey) {
         return std::string();
@@ -149,7 +149,7 @@ std::string FreeFn::calculateSignature(const std::string& signedInfo, evp_pkey_s
     return encoded_data;
 }
 
-std::string FreeFn::getSHA256DigestBase64(x509_st* cert)
+std::string Crypto::getSHA256DigestBase64(x509_st* cert)
 {
     // Check if the certificate is valid
     if (cert == nullptr) {
@@ -191,7 +191,7 @@ std::string FreeFn::getSHA256DigestBase64(x509_st* cert)
     return base64Digest;
 }
 
-std::string FreeFn::IssuerSerialBase64(x509_st* cert)
+std::string Crypto::IssuerSerialBase64(x509_st* cert)
 {
     if (cert == nullptr) {
         return "Invalid X509 certificate provided";
@@ -224,7 +224,7 @@ std::string FreeFn::IssuerSerialBase64(x509_st* cert)
 }
 
 
-bool FreeFn::isValidX509(x509_st* cert)
+bool Crypto::isValidX509(x509_st* cert)
 {
     if (!cert) {
         return "Invalid certificate";
@@ -270,7 +270,7 @@ std::vector<std::pair<std::string, std::string>> getNamespacesFromRoot(xmlNodePt
 
 void customErrorHandler(void* ctx, const char* msg, ...) {(void)ctx;(void)msg;}
 
-std::string FreeFn::addNamespacesToRoot(const std::string& xmlContentDst, const NSList& namespaces)
+std::string Crypto::addNamespacesToRoot(const std::string& xmlContentDst, const NSList& namespaces)
 {
     //supress the missing namespace errors
      xmlSetGenericErrorFunc(NULL, customErrorHandler);
@@ -310,7 +310,7 @@ std::string FreeFn::addNamespacesToRoot(const std::string& xmlContentDst, const 
     return modifiedXml;
 }
 
-std::vector<std::pair<std::string, std::string>> FreeFn::getNamespacesFromRoot(const std::string xml)
+std::vector<std::pair<std::string, std::string>> Crypto::getNamespacesFromRoot(const std::string xml)
 {
 
         // Parse the source XML content
@@ -337,7 +337,7 @@ std::vector<std::pair<std::string, std::string>> FreeFn::getNamespacesFromRoot(c
     return namespaces;
 }
 
-std::string FreeFn::get_country_from_x509(x509_st* cert)
+std::string Crypto::get_country_from_x509(x509_st* cert)
 {
     if (cert == NULL) {
         return "";
@@ -375,7 +375,7 @@ std::string FreeFn::get_country_from_x509(x509_st* cert)
     return country;
 }
 
-std::string FreeFn::get8601timestamp()
+std::string Crypto::get8601timestamp()
 {
     time_t now;
     time(&now);

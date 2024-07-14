@@ -4,7 +4,7 @@
 #include <vector>
 #include <filesystem>
 
-#include "freefn.h"
+#include "crypto.h"
 
 PKCS11_CTX* ctx{ nullptr };
 unsigned int nslots{ 0 };
@@ -47,7 +47,7 @@ PKCS11::PKCS11()
 		{
 			m_certificate = &certs[i];
 
-			if (FreeFn::isValidX509(m_certificate->x509)) break;
+			if (Crypto::isValidX509(m_certificate->x509)) break;
 		}
 
 		if (m_certificate) {
@@ -73,7 +73,7 @@ PKCS11::PKCS11()
 		return;
 	}
 
-	m_509b64 = FreeFn::base64Encode(std::string(vec.data(), vec.size()));
+	m_509b64 = Crypto::base64Encode(std::string(vec.data(), vec.size()));
 
 	auto key = PKCS11_find_key(m_certificate);
 

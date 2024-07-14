@@ -2,7 +2,7 @@
 #include <iostream>
 #include "signer.h"
 #include "pkcs11.h"
-#include "freefn.h"
+#include "crypto.h"
 
 //Simple example. If you want to use the code in your software, don't include this file 
 
@@ -37,13 +37,13 @@ int main()
 
     //Sign SOAP message body
 
-    std::string body = R"(<e:Body Id="signedContent"><ns3:query xmlns:ns1="http://pis.technologica.com/views/" xmlns:ns3="http://pis.technologica.com/ws/"><ns3:user><ns3:egn>8903261129</ns3:egn></ns3:user><ns3:from_clause>INYEAR_DENTAL_ACTS</ns3:from_clause><ns3:orderby_clause><ns1:ocolumn sort="DESC">ACTIVITY_DATE</ns1:ocolumn></ns3:orderby_clause></ns3:query></e:Body>)";
+    std::string body = R"(<e:Body id="signedContent"><ns3:query xmlns:ns1="http://pis.technologica.com/views/" xmlns:ns3="http://pis.technologica.com/ws/"><ns3:user><ns3:egn>8903261129</ns3:egn></ns3:user><ns3:from_clause>INYEAR_DENTAL_ACTS</ns3:from_clause><ns3:orderby_clause><ns1:ocolumn sort="DESC">ACTIVITY_DATE</ns1:ocolumn></ns3:orderby_clause></ns3:query></e:Body>)";
 
     std::string signedSoap = R"(<?xml version="1.0" encoding="utf-8"?><e:Envelope xmlns:e="http://schemas.xmlsoap.org/soap/envelope/"><e:Header>)";
 
     signedSoap += Signer::getSignature(
         //setting envelope namespace
-        FreeFn::addNamespacesToRoot(body, { {"e", "http://schemas.xmlsoap.org/soap/envelope/"} }),
+        Crypto::addNamespacesToRoot(body, { {"e", "http://schemas.xmlsoap.org/soap/envelope/"} }),
         hsm.takePrivateKey(),
         hsm.x509raw(),
         "#signedContent",

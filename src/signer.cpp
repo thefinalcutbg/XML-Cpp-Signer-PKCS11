@@ -1,10 +1,7 @@
 ﻿#include "Signer.h"
 
-#include "freefn.h"
+#include "crypto.h"
 #include "pkcs11.h"
-
-
-
 
 std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509_st* cert, const std::string& URI, bool XAdES)
 {
@@ -15,7 +12,7 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 			"<xades:SignedProperties Id=\"xadesNode\">"
 			"<xades:SignedSignatureProperties>"
 			"<xades:SigningTime>"
-			+ FreeFn::get8601timestamp() +
+			+ Crypto::get8601timestamp() +
 			"</xades:SigningTime>"
 			"<xades:SigningCertificateV2>"
 			"<xades:Cert>"
@@ -23,7 +20,7 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 			"<DigestMethod Algorithm=\"http://www.w3.org/2001/04/xmlenc#sha256\"/>"
 			"<DigestValue>"
 			+
-			FreeFn::getSHA256DigestBase64(cert)
+			Crypto::getSHA256DigestBase64(cert)
 			+
 			"</DigestValue>"
 			"</xades:CertDigest>"
@@ -35,7 +32,7 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 			"<xades:PostalCode/>"
 			"<xades:CountryName>"
 			+
-			FreeFn::get_country_from_x509(cert)
+			Crypto::get_country_from_x509(cert)
 			+
 			"</xades:CountryName>"
 			"</xades:SignatureProductionPlaceV2>"
@@ -68,9 +65,9 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 		"<DigestValue>"
 		//digest value of the document
 		+
-		FreeFn::base64Encode(
-			FreeFn::calculateSHA256Digest(
-				FreeFn::canonicalizeXML(xml)
+		Crypto::base64Encode(
+			Crypto::calculateSHA256Digest(
+				Crypto::canonicalizeXML(xml)
 			)
 		)
 		+
@@ -91,10 +88,10 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 			"<DigestValue>"
 			//digest value of the Signed properties
 			+
-			FreeFn::base64Encode(
-				FreeFn::calculateSHA256Digest(
-					FreeFn::canonicalizeXML(
-						FreeFn::addNamespacesToRoot(xadesNode, { {"xades", "http://uri.etsi.org/01903/v1.3.2#"}, {"", signatureNs } })
+			Crypto::base64Encode(
+				Crypto::calculateSHA256Digest(
+					Crypto::canonicalizeXML(
+						Crypto::addNamespacesToRoot(xadesNode, { {"xades", "http://uri.etsi.org/01903/v1.3.2#"}, {"", signatureNs } })
 					)
 				)
 			)
@@ -112,9 +109,9 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 		signedInfo +
 		"<SignatureValue>"
 		+
-		FreeFn::calculateSignature(
-			FreeFn::canonicalizeXML(
-				FreeFn::addNamespacesToRoot( //since we use exclusive C14, only the signatureNs is required
+		Crypto::calculateSignature(
+			Crypto::canonicalizeXML(
+				Crypto::addNamespacesToRoot( //since we use exclusive C14, only the signatureNs is required
 					signedInfo, NSList{ { "", signatureNs} }
 				)
 			), pkey
@@ -122,7 +119,7 @@ std::string Signer::getSignature(const std::string& xml, evp_pkey_st* pkey, x509
 		+
 		"</SignatureValue>" +
 		"<KeyInfo><X509Data><X509Certificate>" +
-		FreeFn::base64Encode(cert) +
+		Crypto::base64Encode(cert) +
 		"</X509Certificate></X509Data></KeyInfo>"
 		;
 

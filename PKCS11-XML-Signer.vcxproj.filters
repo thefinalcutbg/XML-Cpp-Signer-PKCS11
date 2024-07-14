@@ -21,7 +21,7 @@
     <ClCompile Include="src\pkcs11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\freefn.cpp">
+    <ClCompile Include="src\crypto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\signer.cpp">
@@ -32,7 +32,7 @@
     <ClInclude Include="src\pkcs11.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\freefn.h">
+    <ClInclude Include="src\crypto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\signer.h">
