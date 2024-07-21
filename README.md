@@ -14,13 +14,8 @@ A simple C++17 script that creates enveloped XML signature using the PKCS11 inte
 
 Use the provided MS Visual Studio solution or setup the project by yourself. Provide the necessary includes and libs.
 
-## License
-
-This software is licensed under the MIT license, or public domain if desired and recognized in your jurisdiction.
-
-### Example
+## Example
 ```
-#include <string>
 #include <iostream>
 #include "signer.h"
 #include "pkcs11.h"
@@ -47,6 +42,7 @@ int main()
      
           if (!hsm.login(password)) {
               std::cout << std::endl << "Wrong password!" << std::endl;
+              return 0;
           }
       }
      
@@ -56,3 +52,7 @@ int main()
       return 0;
 }
 ```
+
+## License
+
+This software is licensed under the MIT license.

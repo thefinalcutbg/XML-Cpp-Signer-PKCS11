@@ -1,4 +1,3 @@
-#include <string>
 #include <iostream>
 #include "signer.h"
 #include "pkcs11.h"
@@ -29,6 +28,7 @@ int main()
 
         if (!hsm.login(password)) {
             std::cout << std::endl << "Wrong password!" << std::endl;
+            return 0;
         }
     }
 
